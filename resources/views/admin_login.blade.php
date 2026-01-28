@@ -11,7 +11,7 @@
         <main class="login-wrap">
             <h1 class="title">ADMIN LOGIN</h1>
 
-            <form action="#" method="POST" class="login-form">
+            <form action="{{ url('/admin_login') }}" method="POST" class="login-form">
                 @csrf
                 <label class="field">
                     <input type="email" name="email" placeholder="Email" required />
