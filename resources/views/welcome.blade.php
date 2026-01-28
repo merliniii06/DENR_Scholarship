@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'DENR Scholarship') }}</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{asset(asset('css/welcome.css'))}}">
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
 </head>
 <body class="min-h-screen flex items-center justify-center bg-gray-100">
     <div class="max-w-xl w-full p-6 bg-white rounded shadow">
         <div style="display:flex;justify-content:center;margin-bottom:1rem;">
             <a href="{{ url('/home') }}" title="Go to Home">
-                <img src="{{ asset('images/Frame 1.png') }}" alt="Center Image" style="max-width:220px;height:auto;cursor:pointer;">
+                <img src="{{ asset('Images/Frame 1.png') }}" alt="Center Image" style="max-width:220px;height:auto;cursor:pointer;">
             </a>
         </div>
         <h1 class="text-2xl font-bold mb-2">Welcome to DENR</h1>
