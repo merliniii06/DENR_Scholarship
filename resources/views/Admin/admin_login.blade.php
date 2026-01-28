@@ -11,10 +11,16 @@
         <main class="login-wrap">
             <h1 class="title">ADMIN LOGIN</h1>
 
+            @if ($errors->any())
+                <div style="color: red; margin-bottom: 1rem; text-align: center;">
+                    {{ $errors->first() }}
+                </div>
+            @endif
+
             <form action="{{ url('/admin_login') }}" method="POST" class="login-form">
                 @csrf
                 <label class="field">
-                    <input type="email" name="email" placeholder="Email" required />
+                    <input type="email" name="login" value="{{ old('login') }}" placeholder="Email" required />
                 </label>
 
                 <label class="field">
