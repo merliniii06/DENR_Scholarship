@@ -33,11 +33,8 @@ class UserController extends Controller
             case 'denr_scholar':
                 return view('User.denr_scholar_form');
             case 'study_non_study':
-                // TODO: Create study_non_study form
-                return view('User.application_form', ['type' => $type]);
             case 'permit_to_study':
-                // TODO: Create permit_to_study form
-                return view('User.application_form', ['type' => $type]);
+                return view('User.application_type', ['show_placeholder' => true, 'type' => $type]);
             default:
                 return redirect('/apply')->with('error', 'Invalid application type');
         }
@@ -65,7 +62,6 @@ class UserController extends Controller
             'file6' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
             'file7' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
             'file8' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
-            'additional_files.*' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
         ]);
 
         try {
@@ -83,21 +79,6 @@ class UserController extends Controller
                     $fileName = time() . '_' . $i . '_' . $file->getClientOriginalName();
                     $filePath = $file->storeAs($storagePath, $fileName, 'public');
                     $filePaths["file_{$i}"] = $filePath;
-                }
-            }
-
-            // Handle additional files (if any)
-            $additionalFiles = [];
-            if ($request->hasFile('additional_files')) {
-                foreach ($request->file('additional_files') as $index => $file) {
-                    if ($file && $file->isValid()) {
-                        $fileName = time() . '_additional_' . ($index + 1) . '_' . $file->getClientOriginalName();
-                        $filePath = $file->storeAs($storagePath, $fileName, 'public');
-                        $additionalFiles[] = [
-                            'name' => $file->getClientOriginalName(),
-                            'path' => $filePath
-                        ];
-                    }
                 }
             }
 
@@ -124,7 +105,6 @@ class UserController extends Controller
                 'file_6' => $filePaths['file_6'] ?? null,
                 'file_7' => $filePaths['file_7'] ?? null,
                 'file_8' => $filePaths['file_8'] ?? null,
-                'additional_files' => !empty($additionalFiles) ? json_encode($additionalFiles) : null,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

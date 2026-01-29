@@ -19,3 +19,7 @@ Route::get('/admin_login', [AdminController::class, 'showLogin']);
 Route::post('/admin_login', [AdminController::class, 'login']);
 Route::post('/admin_logout', [AdminController::class, 'logout']);
 Route::get('/admin_home', [AdminController::class, 'showHome']);
+Route::get('/admin_home/today', [AdminController::class, 'viewTodaysApplications'])->name('admin.today');
+Route::get('/admin_home/week', [AdminController::class, 'viewThisWeekApplications'])->name('admin.week');
+Route::get('/admin_home/month', [AdminController::class, 'viewThisMonthApplications'])->name('admin.month');
+Route::post('/admin/applications/{id}/delete', [AdminController::class, 'deleteApplication'])->name('admin.applications.delete');
