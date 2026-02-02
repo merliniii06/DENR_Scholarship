@@ -13,12 +13,15 @@ Route::get('/home', [HomeController::class, 'home']);
 Route::get('/apply', [UserController::class, 'showApplicationType']);
 Route::get('/apply/form', [UserController::class, 'showApplicationForm']);
 Route::post('/apply/denr-scholar', [UserController::class, 'submitDenrScholar']);
+Route::post('/apply/study-non-study', [UserController::class, 'submitStudyNonStudy']);
+Route::post('/apply/permit-to-study', [UserController::class, 'submitPermitToStudy']);
 
 // Admin routes
 Route::get('/admin_login', [AdminController::class, 'showLogin']);
 Route::post('/admin_login', [AdminController::class, 'login']);
 Route::post('/admin_logout', [AdminController::class, 'logout']);
 Route::get('/admin_home', [AdminController::class, 'showHome']);
+Route::get('/admin/api/applications', [AdminController::class, 'getApplicationsJson']);
 Route::get('/admin_home/today', [AdminController::class, 'viewTodaysApplications'])->name('admin.today');
 Route::get('/admin_home/week', [AdminController::class, 'viewThisWeekApplications'])->name('admin.week');
 Route::get('/admin_home/month', [AdminController::class, 'viewThisMonthApplications'])->name('admin.month');

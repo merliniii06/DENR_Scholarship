@@ -117,6 +117,40 @@ body {
     text-decoration: underline;
 }
 
+/* Auto-refresh indicator */
+.auto-refresh-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85em;
+    color: #27ae60;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    background: #e8f5e9;
+    border-radius: 20px;
+    width: fit-content;
+    transition: all 0.3s ease;
+}
+
+.auto-refresh-indicator.updated {
+    background: #c8e6c9;
+    transform: scale(1.05);
+}
+
+.auto-refresh-indicator .pulse {
+    width: 8px;
+    height: 8px;
+    background: #27ae60;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
 .applications-section {
     background: white;
     border-radius: 10px;
@@ -140,6 +174,82 @@ body {
     border-radius: 8px;
     margin-bottom: 20px;
     border: 1px solid #f5c6cb;
+}
+
+/* Type Filters */
+.type-filters {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-label {
+    font-weight: 600;
+    color: #666;
+    margin-right: 5px;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.85em;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    background: #f0f0f0;
+    color: #666;
+    border: 2px solid transparent;
+}
+
+.filter-btn:hover {
+    background: #e0e0e0;
+}
+
+.filter-btn.active {
+    background: #27ae60;
+    color: white;
+}
+
+.filter-btn.filter-denr {
+    border-color: #1565c0;
+}
+
+.filter-btn.filter-denr:hover,
+.filter-btn.filter-denr.active {
+    background: #1565c0;
+    color: white;
+}
+
+.filter-btn.filter-study {
+    border-color: #e65100;
+}
+
+.filter-btn.filter-study:hover,
+.filter-btn.filter-study.active {
+    background: #e65100;
+    color: white;
+}
+
+.filter-btn.filter-non-study {
+    border-color: #7b1fa2;
+}
+
+.filter-btn.filter-non-study:hover,
+.filter-btn.filter-non-study.active {
+    background: #7b1fa2;
+    color: white;
+}
+
+.filter-btn.filter-permit {
+    border-color: #00695c;
+}
+
+.filter-btn.filter-permit:hover,
+.filter-btn.filter-permit.active {
+    background: #00695c;
+    color: white;
 }
 
 .section-header {
@@ -185,6 +295,40 @@ body {
     border-radius: 20px;
     font-size: 0.85em;
     font-weight: 500;
+}
+
+.type-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75em;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.type-denr {
+    background: #e3f2fd;
+    color: #1565c0;
+}
+
+.type-study {
+    background: #fff3e0;
+    color: #e65100;
+}
+
+.type-permit {
+    background: #e0f2f1;
+    color: #00695c;
+}
+
+.modal-type-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: 600;
+    background: #e8f5e9;
+    color: #2e7d32;
 }
 
 .file-link {
