@@ -25,4 +25,5 @@ Route::get('/admin/api/applications', [AdminController::class, 'getApplicationsJ
 Route::get('/admin_home/today', [AdminController::class, 'viewTodaysApplications'])->name('admin.today');
 Route::get('/admin_home/week', [AdminController::class, 'viewThisWeekApplications'])->name('admin.week');
 Route::get('/admin_home/month', [AdminController::class, 'viewThisMonthApplications'])->name('admin.month');
+Route::post('/admin/applications/{id}/confirm', [AdminController::class, 'confirmApplication'])->name('admin.applications.confirm');
 Route::post('/admin/applications/{id}/delete', [AdminController::class, 'deleteApplication'])->name('admin.applications.delete');

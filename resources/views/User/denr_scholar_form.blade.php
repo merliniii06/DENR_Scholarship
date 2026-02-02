@@ -98,7 +98,7 @@
                             <option value="CENRO Puerto Princesa" {{ old('office') == 'CENRO Puerto Princesa' ? 'selected' : '' }}>CENRO Puerto Princesa</option>
                             <option value="CENRO Quezon" {{ old('office') == 'CENRO Quezon' ? 'selected' : '' }}>CENRO Quezon</option>
                             <option value="CENRO Roxas, Palawan" {{ old('office') == 'CENRO Roxas, Palawan' ? 'selected' : '' }}>CENRO Roxas, Palawan</option>
-                            <option value="CENRO Tagaytay" {{ old('office') == 'CENRO Tagaytay' ? 'selected' : '' }}>CENRO Tagaytay</option>
+                            <option value="CENRO Taytay" {{ old('office') == 'CENRO Taytay' ? 'selected' : '' }}>CENRO Taytay</option>
                             <option value="CENRO Brooke's Point" {{ old('office') == 'CENRO Brooke\'s Point' ? 'selected' : '' }}>CENRO Brooke's Point</option>
                             <option value="CENRO Coron" {{ old('office') == 'CENRO Coron' ? 'selected' : '' }}>CENRO Coron</option>
                         </select>

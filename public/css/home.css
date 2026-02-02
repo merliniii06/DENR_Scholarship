@@ -1,104 +1,119 @@
-:root{
-  --bg1:#eef2ff;
-  --bg2:#e0f2fe;
-  --card:#ffffff;
-  --accent:#2563eb;
-  --muted:#6b7280;
-  --nav-bg: rgba(255,255,255,0.6);
+:root {
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --text-muted: #6b7280;
+    --accent: #2d5a47;
+    --accent-light: #e8f0ed;
+    --border: #e5e5e5;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif}
+* {
+    box-sizing: border-box;
+}
 
-/* page background gradient */
-body{
-  background: linear-gradient(135deg,var(--bg1) 0%, #dbeafe 50%, var(--bg2) 100%);
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+body {
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* navbar */
-.site-nav{
-  position:sticky;
-  top:0;
-  backdrop-filter: blur(6px);
-  background:var(--nav-bg);
-  border-bottom:1px solid rgba(0,0,0,0.05);
+.site-nav {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
 }
-.nav-container{
-  max-width:1400px;
-  margin:0 auto;
-  padding:12px 16px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
-.brand{
-    font-weight:700;
-    color:#0f172a;
-    font-size: 1.75rem;
+
+.brand {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
 }
 
 /* center hero */
-.hero{
-  flex:1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:40px 16px;
+.hero {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
 }
-.choices{
-  display:flex;
-  gap:100px;
-  align-items:center;
-  justify-content:center;
-  flex-wrap:wrap;
-  max-width:900px;
-  width:100%;
 
+.choices {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 600px;
+    width: 100%;
 }
 
 /* each choice card */
-.choice{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  text-decoration:none;
-  background:var(--card);
-  padding:12px;            /* reduced padding so box hugs image */
-  border-radius:12px;
-  width:200px;             /* box width = image width */
-  box-shadow:0 8px 20px rgba(2,6,23,0.06);
-  transition:transform .15s ease, box-shadow .15s ease;
-  color:var(--muted);
-  border:1px solid rgba(15,23,42,0.04);
-  box-sizing:border-box;
+.choice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    background: var(--card);
+    padding: 24px;
+    border-radius: 12px;
+    width: 200px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    transition: border-color 0.2s ease;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
 }
-.choice img{
-  width:100%;
-  height:190px;            /* fixed image height for uniform size */
-  object-fit:cover;        /* preserve aspect, fill box */
-  display:block;
-  margin:0 0 12px 0;
-  border-radius:8px;
+
+.choice img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    display: block;
+    margin: 0 0 16px 0;
+    border-radius: 8px;
 }
-.choice span{
-  font-weight:700;
-  color:#0f172a;
-  text-align:center;
-  display:block;
-  font-size: 1.50rem;
+
+.choice span {
+    font-weight: 600;
+    color: var(--text);
+    text-align: center;
+    display: block;
+    font-size: 1rem;
 }
-.choice:hover{
-  transform:translateY(-6px);
-  box-shadow:0 18px 40px rgba(2,6,23,0.09);
-  cursor:pointer;
+
+.choice:hover {
+    border-color: var(--accent);
+    cursor: pointer;
 }
 
 /* responsive */
-@media (max-width:640px){
-  .choices{gap:16px}
-  .choice{width:46%}
-  .nav-container{padding:10px}
+@media (max-width: 640px) {
+    .choices {
+        gap: 16px;
+    }
+    .choice {
+        width: 100%;
+        max-width: 280px;
+    }
+    .nav-container {
+        padding: 12px 16px;
+    }
 }
