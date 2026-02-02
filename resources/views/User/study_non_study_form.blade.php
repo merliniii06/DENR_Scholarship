@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DENR Scholar Application - {{ config('app.name', 'DENR Scholarship') }}</title>
+    <title>Study / Non-Study Application - {{ config('app.name', 'DENR Scholarship') }}</title>
     <link rel="stylesheet" href="{{ asset('css/denr_scholar_form.css') }}">
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>DENR Scholar Application</h1>
+            <h1>Study / Non-Study Application</h1>
             <p>Please fill out all required fields</p>
         </div>
 
@@ -19,7 +19,7 @@
             </div>
         @endif
 
-        <form action="{{ url('/apply/denr-scholar') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ url('/apply/study-non-study') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="form-layout">
@@ -111,6 +111,18 @@
                         <label for="phonenumber">Phone Number <span class="required">*</span></label>
                         <input type="tel" id="phonenumber" name="phonenumber" value="{{ old('phonenumber') }}" required>
                         @error('phonenumber')
+                            <small class="error">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="study_type">Study Type <span class="required">*</span></label>
+                        <select id="study_type" name="study_type" required>
+                            <option value="">-- Select Study Type --</option>
+                            <option value="Study" {{ old('study_type') == 'Study' ? 'selected' : '' }}>Study</option>
+                            <option value="Non-Study" {{ old('study_type') == 'Non-Study' ? 'selected' : '' }}>Non-Study</option>
+                        </select>
+                        @error('study_type')
                             <small class="error">{{ $message }}</small>
                         @enderror
                     </div>

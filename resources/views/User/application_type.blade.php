@@ -46,19 +46,37 @@
 
             <div class="application-types">
                 <a href="#" class="application-type-card" onclick="selectType('denr_scholar')">
-                    <div class="icon">🎓</div>
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 3L1 9l11 6 9-4.91V17M5 13.18v4L12 21l7-3.82v-4"/>
+                        </svg>
+                    </div>
                     <h3>DENR Scholar</h3>
                     <p>Apply for DENR Scholarship program</p>
                 </a>
 
                 <a href="#" class="application-type-card" onclick="selectType('study_non_study')">
-                    <div class="icon">📚</div>
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+                            <line x1="9" y1="7" x2="16" y2="7"/>
+                            <line x1="9" y1="11" x2="14" y2="11"/>
+                        </svg>
+                    </div>
                     <h3>Study / Non-Study</h3>
                     <p>Apply for Study or Non-Study program</p>
                 </a>
 
                 <a href="#" class="application-type-card" onclick="selectType('permit_to_study')">
-                    <div class="icon">📋</div>
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="5" y="2" width="14" height="20" rx="2"/>
+                            <line x1="9" y1="7" x2="15" y2="7"/>
+                            <line x1="9" y1="11" x2="15" y2="11"/>
+                            <line x1="9" y1="15" x2="12" y2="15"/>
+                        </svg>
+                    </div>
                     <h3>Permit to Study</h3>
                     <p>Request permit to study</p>
                 </a>
