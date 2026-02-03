@@ -15,6 +15,7 @@ Route::get('/apply/form', [UserController::class, 'showApplicationForm']);
 Route::post('/apply/denr-scholar', [UserController::class, 'submitDenrScholar']);
 Route::post('/apply/study-non-study', [UserController::class, 'submitStudyNonStudy']);
 Route::post('/apply/permit-to-study', [UserController::class, 'submitPermitToStudy']);
+Route::post('/apply/study-leave', [UserController::class, 'submitStudyLeave']);
 
 // Admin routes
 Route::get('/admin_login', [AdminController::class, 'showLogin']);

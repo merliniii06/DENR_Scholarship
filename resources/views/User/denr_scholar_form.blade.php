@@ -161,7 +161,7 @@
                     </div>
 
                     <div class="file-group">
-                        <label for="file6">PDS <span class="required">*</span></label>
+                        <label for="file6">PDS w/ WES <span class="required">*</span></label>
                         <input type="file" id="file6" name="file6" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
                         @error('file6')
                             <small class="error">{{ $message }}</small>
@@ -177,8 +177,8 @@
                     </div>
 
                     <div class="file-group">
-                        <label for="file8">Others <span class="required">*</span></label>
-                        <input type="file" id="file8" name="file8" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
+                        <label for="file8">Others <span class="optional">(optional)</span></label>
+                        <input type="file" id="file8" name="file8" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
                         @error('file8')
                             <small class="error">{{ $message }}</small>
                         @enderror

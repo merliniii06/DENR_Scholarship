@@ -4,85 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Application Confirmed</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: #1a1a1a;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
-        .container {
-            max-width: 600px;
-            margin: 40px auto;
-            background: #ffffff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .header {
-            background: #2d5a47;
-            color: white;
-            padding: 32px;
-            text-align: center;
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 24px;
-            font-weight: 600;
-        }
-        .content {
-            padding: 32px;
-        }
-        .greeting {
-            font-size: 18px;
-            margin-bottom: 16px;
-        }
-        .message {
-            color: #4a4a4a;
-            margin-bottom: 24px;
-        }
-        .details {
-            background: #f8f9fa;
-            border-radius: 6px;
-            padding: 20px;
-            margin: 24px 0;
-        }
-        .details h3 {
-            margin: 0 0 12px 0;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #6b7280;
-        }
-        .details p {
-            margin: 8px 0;
-            color: #1a1a1a;
-        }
-        .details strong {
-            color: #2d5a47;
-        }
-        .badge {
-            display: inline-block;
-            background: #d1fae5;
-            color: #065f46;
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        .footer {
-            padding: 24px 32px;
-            background: #f8f9fa;
-            text-align: center;
-            color: #6b7280;
-            font-size: 13px;
-        }
-        .footer p {
-            margin: 4px 0;
-        }
-    </style>
+    <style>{{ file_get_contents(public_path('css/email-application-confirmed.css')) }}</style>
 </head>
 <body>
     <div class="container">
@@ -112,7 +34,8 @@
             </p>
             
             <p class="message">
-                If you have any questions, please contact the HRDS office.
+                If you have any questions, please contact the HRDS office. <br>
+                Email: hrds.r4b@denr.gov.ph
             </p>
             
             <p style="margin-top: 32px;">

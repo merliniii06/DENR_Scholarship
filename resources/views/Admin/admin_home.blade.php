@@ -36,6 +36,7 @@
                     $confirmedDenr = $confirmedApplications->filter(fn($app) => $app->application_type === 'DENR Scholar');
                     $confirmedStudy = $confirmedApplications->filter(fn($app) => $app->application_type === 'Study/Non-Study');
                     $confirmedPermit = $confirmedApplications->filter(fn($app) => $app->application_type === 'Permit to Study');
+                    $confirmedStudyLeave = $confirmedApplications->filter(fn($app) => $app->application_type === 'Study Leave');
                 @endphp
                 
                 <div class="sidebar-folder" onclick="openFolder('denr')">
@@ -71,6 +72,18 @@
                     <div class="sidebar-folder-info">
                         <div class="sidebar-folder-name">Permit to Study</div>
                         <div class="sidebar-folder-count">{{ $confirmedPermit->count() }} confirmed</div>
+                    </div>
+                </div>
+
+                <div class="sidebar-folder" onclick="openFolder('study_leave')">
+                    <div class="sidebar-folder-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>
+                        </svg>
+                    </div>
+                    <div class="sidebar-folder-info">
+                        <div class="sidebar-folder-name">Study Leave</div>
+                        <div class="sidebar-folder-count">{{ $confirmedStudyLeave->count() }} confirmed</div>
                     </div>
                 </div>
             </div>
@@ -125,6 +138,7 @@
                 <a href="{{ url('/admin_home?filter=study') }}" class="filter-btn filter-study {{ ($active_filter ?? '') === 'study' ? 'active' : '' }}">Study</a>
                 <a href="{{ url('/admin_home?filter=non_study') }}" class="filter-btn filter-non-study {{ ($active_filter ?? '') === 'non_study' ? 'active' : '' }}">Non-Study</a>
                 <a href="{{ url('/admin_home?filter=permit_to_study') }}" class="filter-btn filter-permit {{ ($active_filter ?? '') === 'permit_to_study' ? 'active' : '' }}">Permit to Study</a>
+                <a href="{{ url('/admin_home?filter=study_leave') }}" class="filter-btn filter-study-leave {{ ($active_filter ?? '') === 'study_leave' ? 'active' : '' }}">Study Leave</a>
             </div>
 
             @if(session('success'))
@@ -157,6 +171,7 @@
                                             'DENR Scholar' => 'type-denr',
                                             'Study/Non-Study' => 'type-study',
                                             'Permit to Study' => 'type-permit',
+                                            'Study Leave' => 'type-study-leave',
                                             default => 'type-study'
                                         };
                                     @endphp
@@ -187,6 +202,7 @@
                                             'DENR Scholar' => 'denr_scholar',
                                             'Study/Non-Study' => 'study_non_study',
                                             'Permit to Study' => 'permit_to_study',
+                                            'Study Leave' => 'study_leave',
                                             default => 'denr_scholar'
                                         };
                                     @endphp
@@ -244,7 +260,7 @@
                     3: 'Nomination Letter',
                     4: 'Service Record',
                     5: 'Certificate of No Pending Admin Case',
-                    6: 'PDS',
+                    6: 'PDS w/ WES',
                     7: 'Self-Certification of Travel History',
                     8: 'Others'
                 },
@@ -254,7 +270,7 @@
                     3: 'Nomination Letter',
                     4: 'Service Record',
                     5: 'Certificate of No Pending Admin Case',
-                    6: 'PDS',
+                    6: 'PDS w/ WES',
                     7: 'Self-Certification of Travel History',
                     8: 'Others'
                 },
@@ -262,11 +278,22 @@
                     1: 'Request Letter',
                     2: 'IPCR',
                     3: 'Registration Form from School'
+                },
+                'Study Leave': {
+                    1: 'Study Leave Memorandum',
+                    2: 'Application for Leave',
+                    3: 'Updated PDS',
+                    4: 'Proof of Review',
+                    5: 'Self-Review Certification',
+                    6: 'Graduate Program Registration',
+                    7: "Master's Completion Certification",
+                    8: 'No Pending Case Certification',
+                    9: "Supervisor's Certification"
                 }
             };
 
             const fileLabels = fileLabelsByType[application.application_type] || fileLabelsByType['DENR Scholar'];
-            const maxFiles = application.application_type === 'Permit to Study' ? 3 : 8;
+            const maxFiles = application.application_type === 'Permit to Study' ? 3 : (application.application_type === 'Study Leave' ? 9 : 8);
 
             let filesHtml = '';
             for (let i = 1; i <= maxFiles; i++) {
@@ -321,13 +348,15 @@
         const folderTitles = {
             'denr': 'DENR Scholar - Confirmed Applications',
             'study': 'Study / Non-Study - Confirmed Applications',
-            'permit': 'Permit to Study - Confirmed Applications'
+            'permit': 'Permit to Study - Confirmed Applications',
+            'study_leave': 'Study Leave - Confirmed Applications'
         };
 
         const folderTypes = {
             'denr': 'DENR Scholar',
             'study': 'Study/Non-Study',
-            'permit': 'Permit to Study'
+            'permit': 'Permit to Study',
+            'study_leave': 'Study Leave'
         };
 
         function openFolder(folderType) {
@@ -388,6 +417,7 @@
                 case 'DENR Scholar': return 'type-denr';
                 case 'Study/Non-Study': return 'type-study';
                 case 'Permit to Study': return 'type-permit';
+                case 'Study Leave': return 'type-study-leave';
                 default: return 'type-study';
             }
         }
@@ -397,6 +427,7 @@
                 case 'DENR Scholar': return 'denr_scholar';
                 case 'Study/Non-Study': return 'study_non_study';
                 case 'Permit to Study': return 'permit_to_study';
+                case 'Study Leave': return 'study_leave';
                 default: return 'denr_scholar';
             }
         }

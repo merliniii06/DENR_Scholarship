@@ -45,6 +45,7 @@ class AdminController extends Controller
                 'study' => 'Study Applications',
                 'non_study' => 'Non-Study Applications',
                 'permit_to_study' => 'Permit to Study Applications',
+                'study_leave' => 'Study Leave Applications',
             ];
             $data['section_title'] = $filterTitles[$filter] ?? 'All Applications';
             $data['show_filter_link'] = true;
@@ -60,7 +61,7 @@ class AdminController extends Controller
         $denrQuery = DB::table('denr_scholar')
             ->select('id', 'full_name', 'age', 'gender', 'email', 'position', 'office', 'phone_number', 
                      'file_1', 'file_2', 'file_3', 'file_4', 'file_5', 'file_6', 'file_7', 'file_8', 'status', 'confirmed_at', 'created_at', 'updated_at')
-            ->selectRaw("'DENR Scholar' as application_type, NULL as study_type")
+            ->selectRaw("NULL as file_9, 'DENR Scholar' as application_type, NULL as study_type")
             ->where(function($query) use ($oneWeekAgo, $includeAllConfirmed) {
                 // Show pending applications OR confirmed within the last week (or all if includeAllConfirmed)
                 $query->where('status', 'pending')
@@ -75,7 +76,7 @@ class AdminController extends Controller
         $studyQuery = DB::table('study_non_study')
             ->select('id', 'full_name', 'age', 'gender', 'email', 'position', 'office', 'phone_number',
                      'file_1', 'file_2', 'file_3', 'file_4', 'file_5', 'file_6', 'file_7', 'file_8', 'status', 'confirmed_at', 'created_at', 'updated_at')
-            ->selectRaw("'Study/Non-Study' as application_type, study_type")
+            ->selectRaw("NULL as file_9, 'Study/Non-Study' as application_type, study_type")
             ->where(function($query) use ($oneWeekAgo, $includeAllConfirmed) {
                 $query->where('status', 'pending')
                       ->orWhere(function($q) use ($oneWeekAgo, $includeAllConfirmed) {
@@ -87,7 +88,21 @@ class AdminController extends Controller
             });
 
         $permitQuery = DB::table('permit_to_study')
-            ->selectRaw("id, full_name, age, gender, email, position, office, phone_number, file_1, file_2, file_3, NULL as file_4, NULL as file_5, NULL as file_6, NULL as file_7, NULL as file_8, status, confirmed_at, created_at, updated_at, 'Permit to Study' as application_type, NULL as study_type")
+            ->selectRaw("id, full_name, age, gender, email, position, office, phone_number, file_1, file_2, file_3, NULL as file_4, NULL as file_5, NULL as file_6, NULL as file_7, NULL as file_8, NULL as file_9, status, confirmed_at, created_at, updated_at, 'Permit to Study' as application_type, NULL as study_type")
+            ->where(function($query) use ($oneWeekAgo, $includeAllConfirmed) {
+                $query->where('status', 'pending')
+                      ->orWhere(function($q) use ($oneWeekAgo, $includeAllConfirmed) {
+                          $q->where('status', 'confirmed');
+                          if (!$includeAllConfirmed) {
+                              $q->where('confirmed_at', '>=', $oneWeekAgo);
+                          }
+                      });
+            });
+
+        $studyLeaveQuery = DB::table('study_leave')
+            ->select('id', 'full_name', 'age', 'gender', 'email', 'position', 'office', 'phone_number',
+                     'file_1', 'file_2', 'file_3', 'file_4', 'file_5', 'file_6', 'file_7', 'file_8', 'status', 'confirmed_at', 'created_at', 'updated_at')
+            ->selectRaw("file_9, 'Study Leave' as application_type, NULL as study_type")
             ->where(function($query) use ($oneWeekAgo, $includeAllConfirmed) {
                 $query->where('status', 'pending')
                       ->orWhere(function($q) use ($oneWeekAgo, $includeAllConfirmed) {
@@ -102,6 +117,7 @@ class AdminController extends Controller
             $denrQuery->where('created_at', '>=', $whereClause);
             $studyQuery->where('created_at', '>=', $whereClause);
             $permitQuery->where('created_at', '>=', $whereClause);
+            $studyLeaveQuery->where('created_at', '>=', $whereClause);
         }
 
         // Apply type filter
@@ -117,10 +133,12 @@ class AdminController extends Controller
                         ->orderBy('created_at', 'desc')->get();
                 case 'permit_to_study':
                     return $permitQuery->orderBy('created_at', 'desc')->get();
+                case 'study_leave':
+                    return $studyLeaveQuery->orderBy('created_at', 'desc')->get();
             }
         }
 
-        return $denrQuery->union($studyQuery)->union($permitQuery)
+        return $denrQuery->union($studyQuery)->union($permitQuery)->union($studyLeaveQuery)
             ->orderBy('created_at', 'desc')
             ->get();
     }
@@ -133,20 +151,26 @@ class AdminController extends Controller
         $denrQuery = DB::table('denr_scholar')
             ->select('id', 'full_name', 'age', 'gender', 'email', 'position', 'office', 'phone_number', 
                      'file_1', 'file_2', 'file_3', 'file_4', 'file_5', 'file_6', 'file_7', 'file_8', 'status', 'confirmed_at', 'created_at', 'updated_at')
-            ->selectRaw("'DENR Scholar' as application_type, NULL as study_type")
+            ->selectRaw("NULL as file_9, 'DENR Scholar' as application_type, NULL as study_type")
             ->where('status', 'confirmed');
 
         $studyQuery = DB::table('study_non_study')
             ->select('id', 'full_name', 'age', 'gender', 'email', 'position', 'office', 'phone_number',
                      'file_1', 'file_2', 'file_3', 'file_4', 'file_5', 'file_6', 'file_7', 'file_8', 'status', 'confirmed_at', 'created_at', 'updated_at')
-            ->selectRaw("'Study/Non-Study' as application_type, study_type")
+            ->selectRaw("NULL as file_9, 'Study/Non-Study' as application_type, study_type")
             ->where('status', 'confirmed');
 
         $permitQuery = DB::table('permit_to_study')
-            ->selectRaw("id, full_name, age, gender, email, position, office, phone_number, file_1, file_2, file_3, NULL as file_4, NULL as file_5, NULL as file_6, NULL as file_7, NULL as file_8, status, confirmed_at, created_at, updated_at, 'Permit to Study' as application_type, NULL as study_type")
+            ->selectRaw("id, full_name, age, gender, email, position, office, phone_number, file_1, file_2, file_3, NULL as file_4, NULL as file_5, NULL as file_6, NULL as file_7, NULL as file_8, NULL as file_9, status, confirmed_at, created_at, updated_at, 'Permit to Study' as application_type, NULL as study_type")
             ->where('status', 'confirmed');
 
-        return $denrQuery->union($studyQuery)->union($permitQuery)
+        $studyLeaveQuery = DB::table('study_leave')
+            ->select('id', 'full_name', 'age', 'gender', 'email', 'position', 'office', 'phone_number',
+                     'file_1', 'file_2', 'file_3', 'file_4', 'file_5', 'file_6', 'file_7', 'file_8', 'status', 'confirmed_at', 'created_at', 'updated_at')
+            ->selectRaw("file_9, 'Study Leave' as application_type, NULL as study_type")
+            ->where('status', 'confirmed');
+
+        return $denrQuery->union($studyQuery)->union($permitQuery)->union($studyLeaveQuery)
             ->orderBy('confirmed_at', 'desc')
             ->get();
     }
@@ -206,6 +230,7 @@ class AdminController extends Controller
             'denr_scholar' => 'denr_scholar',
             'study_non_study' => 'study_non_study',
             'permit_to_study' => 'permit_to_study',
+            'study_leave' => 'study_leave',
         ];
         $table = $tableMap[$type] ?? 'denr_scholar';
 
@@ -214,6 +239,7 @@ class AdminController extends Controller
             'denr_scholar' => 'DENR Scholar',
             'study_non_study' => 'Study-Non-Study',
             'permit_to_study' => 'Permit to Study',
+            'study_leave' => 'Study Leave',
         ];
         $folderName = $folderMap[$type] ?? 'DENR Scholar';
 
@@ -233,8 +259,8 @@ class AdminController extends Controller
                 Storage::disk('public')->makeDirectory($confirmedPath);
             }
 
-            // Move files to confirmed folder
-            $maxFiles = $type === 'permit_to_study' ? 3 : 8;
+            // Move files to confirmed folder (permit_to_study: 3, study_leave: 9, others: 8)
+            $maxFiles = $type === 'permit_to_study' ? 3 : ($type === 'study_leave' ? 9 : 8);
             $newFilePaths = [];
             
             for ($i = 1; $i <= $maxFiles; $i++) {
@@ -267,6 +293,7 @@ class AdminController extends Controller
                 'denr_scholar' => 'DENR Scholar',
                 'study_non_study' => 'Study / Non-Study',
                 'permit_to_study' => 'Permit to Study',
+                'study_leave' => 'Study Leave',
             ];
             $applicationTypeName = $applicationTypeNames[$type] ?? 'Application';
             
@@ -299,6 +326,7 @@ class AdminController extends Controller
             'denr_scholar' => 'denr_scholar',
             'study_non_study' => 'study_non_study',
             'permit_to_study' => 'permit_to_study',
+            'study_leave' => 'study_leave',
         ];
         $table = $tableMap[$type] ?? 'denr_scholar';
 
@@ -307,8 +335,9 @@ class AdminController extends Controller
             return redirect('/admin_home')->with('error', 'Application not found.');
         }
 
+        $maxFiles = $type === 'permit_to_study' ? 3 : ($type === 'study_leave' ? 9 : 8);
         // Delete stored files if they exist
-        for ($i = 1; $i <= 8; $i++) {
+        for ($i = 1; $i <= $maxFiles; $i++) {
             $col = "file_{$i}";
             if (!empty($application->$col) && Storage::disk('public')->exists($application->$col)) {
                 Storage::disk('public')->delete($application->$col);

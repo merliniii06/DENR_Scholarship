@@ -36,6 +36,8 @@ class UserController extends Controller
                 return view('User.study_non_study_form');
             case 'permit_to_study':
                 return view('User.permit_to_study_form');
+            case 'study_leave':
+                return view('User.study_leave_form');
             default:
                 return redirect('/apply')->with('error', 'Invalid application type');
         }
@@ -62,7 +64,7 @@ class UserController extends Controller
             'file5' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
             'file6' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
             'file7' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
-            'file8' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
+            'file8' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
         ]);
 
         try {
@@ -140,7 +142,7 @@ class UserController extends Controller
             'file5' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
             'file6' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
             'file7' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
-            'file8' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
+            'file8' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
         ]);
 
         try {
@@ -210,7 +212,7 @@ class UserController extends Controller
             'office' => 'required|string|max:255',
             'phonenumber' => 'required|string|max:20',
             'file1' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
-            'file2' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
+            'file2' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
             'file3' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
         ]);
 
@@ -253,6 +255,67 @@ class UserController extends Controller
         } catch (\Exception $e) {
             // Log the error and return with error message
             \Log::error('Error submitting Permit to Study application: ' . $e->getMessage());
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'An error occurred while submitting your application. Please try again.');
+        }
+    }
+
+    public function submitStudyLeave(Request $request)
+    {
+        $rules = [
+            'fullname' => 'required|string|max:255',
+            'age' => 'required|integer|min:1|max:120',
+            'gender' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'position' => 'required|string|max:255',
+            'office' => 'required|string|max:255',
+            'phonenumber' => 'required|string|max:20',
+        ];
+        for ($i = 1; $i <= 9; $i++) {
+            $rules["file{$i}"] = 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240';
+        }
+        $request->validate($rules);
+
+        try {
+            $storagePath = 'applications/study_leave';
+            if (!Storage::disk('public')->exists($storagePath)) {
+                Storage::disk('public')->makeDirectory($storagePath);
+            }
+
+            $filePaths = [];
+            for ($i = 1; $i <= 9; $i++) {
+                if ($request->hasFile("file{$i}")) {
+                    $file = $request->file("file{$i}");
+                    $fileName = time() . '_' . $i . '_' . $file->getClientOriginalName();
+                    $filePath = $file->storeAs($storagePath, $fileName, 'public');
+                    $filePaths["file_{$i}"] = $filePath;
+                }
+            }
+
+            $phoneNumber = preg_replace('/[^0-9]/', '', $request->phonenumber);
+            $phoneNumberInt = (int) $phoneNumber;
+
+            $insert = [
+                'full_name' => $request->fullname,
+                'age' => $request->age,
+                'gender' => $request->gender,
+                'email' => $request->email,
+                'position' => $request->position,
+                'office' => $request->office,
+                'phone_number' => $phoneNumberInt,
+                'status' => 'pending',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+            for ($i = 1; $i <= 9; $i++) {
+                $insert["file_{$i}"] = $filePaths["file_{$i}"] ?? null;
+            }
+            DB::table('study_leave')->insert($insert);
+
+            return redirect('/apply')->with('success', 'Your Study Leave application has been submitted successfully!');
+        } catch (\Exception $e) {
+            \Log::error('Error submitting Study Leave application: ' . $e->getMessage());
             return redirect()->back()
                 ->withInput()
                 ->with('error', 'An error occurred while submitting your application. Please try again.');
