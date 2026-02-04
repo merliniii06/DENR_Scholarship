@@ -135,7 +135,7 @@
                     </div>
 
                     <div class="file-group">
-                        <label for="file3">Updated PDS <span class="required">*</span></label>
+                        <label for="file3">Updated PDS w/ WES <span class="required">*</span></label>
                         <input type="file" id="file3" name="file3" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
                         @error('file3')
                             <small class="error">{{ $message }}</small>

@@ -158,6 +158,35 @@ body {
     opacity: 0.7;
 }
 
+.sidebar-folder-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.sidebar-folder--active {
+    background: rgba(255, 255, 255, 0.15);
+    border-left-color: #ffeb3b;
+}
+
+.confirmed-list--page {
+    margin-top: 16px;
+}
+
+.confirmed-list--page .confirmed-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    background: #fff;
+}
+
+.confirmed-list--page .confirmed-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
 .main-content {
     flex: 1;
     min-width: 0; /* allow flex shrink */
@@ -521,6 +550,22 @@ body {
     background: #1b5e20;
 }
 
+.upload-btn {
+    background: #1565c0;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9em;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s ease;
+}
+
+.upload-btn:hover {
+    background: #0d47a1;
+}
+
 .delete-btn {
     background: #c62828;
     color: white;
@@ -711,6 +756,57 @@ body {
     margin-top: 3px;
 }
 
+.confirmed-name-btn {
+    font: inherit;
+    font-weight: 600;
+    color: #27ae60;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 3px;
+    text-align: left;
+}
+.confirmed-name-btn:hover {
+    color: #1e8449;
+    text-decoration: underline;
+}
+.confirmed-name-chevron {
+    font-size: 0.7em;
+    transition: transform 0.2s ease;
+}
+.confirmed-item--expandable .signed-files-panel {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #e8e8e8;
+    margin-left: 0;
+}
+.signed-files-label {
+    font-size: 0.85em;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 8px;
+}
+.signed-files-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.signed-files-list li {
+    margin-bottom: 6px;
+}
+.signed-file-link {
+    color: #27ae60;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+.signed-file-link:hover {
+    text-decoration: underline;
+}
+
 .confirmed-view-btn {
     background: #27ae60;
     color: white;
@@ -782,6 +878,46 @@ body {
 
 .application-modal .modal-body .field {
     margin-bottom: 15px;
+}
+
+.application-modal .modal-body .form-group {
+    margin-bottom: 16px;
+}
+
+.application-modal .modal-body .form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.application-modal .modal-body .form-group input[type="file"],
+.application-modal .modal-body .form-group textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+}
+
+.application-modal .modal-body .form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.application-modal .modal-body .upload-modal-applicant {
+    margin-bottom: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+.application-modal .modal-body .modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.application-modal .modal-body .required {
+    color: #c62828;
 }
 
 .application-modal .modal-files {
