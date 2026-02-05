@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Permit to Study Application - {{ config('app.name', 'DENR Scholarship') }}</title>
+    <title>Study Leave Application - {{ config('app.name', 'DENR Scholarship') }}</title>
     <link rel="stylesheet" href="{{ asset('css/denr_scholar_form.css') }}">
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Permit to Study Application</h1>
+            <h1>Study Leave Application</h1>
             <p>Please fill out all required fields</p>
         </div>
 
@@ -19,11 +19,10 @@
             </div>
         @endif
 
-        <form action="{{ url('/apply/permit-to-study') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ url('/apply/study-leave') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="form-layout">
-                <!-- Left Side: Fill Up Form -->
                 <div class="form-section">
                     <h3>Personal Information</h3>
 
@@ -116,12 +115,11 @@
                     </div>
                 </div>
 
-                <!-- Right Side: Required Documents -->
                 <div class="form-section">
                     <h3>Required Documents</h3>
 
                     <div class="file-group">
-                        <label for="file1">Request Letter <span class="required">*</span></label>
+                        <label for="file1">Study Leave Memorandum <span class="required">*</span></label>
                         <input type="file" id="file1" name="file1" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
                         @error('file1')
                             <small class="error">{{ $message }}</small>
@@ -129,17 +127,65 @@
                     </div>
 
                     <div class="file-group">
-                        <label for="file2">IPCR <span class="optional">(optional)</span></label>
-                        <input type="file" id="file2" name="file2" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                        <label for="file2">Application for Leave <span class="required">*</span></label>
+                        <input type="file" id="file2" name="file2" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
                         @error('file2')
                             <small class="error">{{ $message }}</small>
                         @enderror
                     </div>
 
                     <div class="file-group">
-                        <label for="file3">Registration Form from School <span class="required">*</span></label>
+                        <label for="file3">Updated PDS w/ WES <span class="required">*</span></label>
                         <input type="file" id="file3" name="file3" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
                         @error('file3')
+                            <small class="error">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="file-group">
+                        <label for="file4">Proof of Review <span class="required">*</span></label>
+                        <input type="file" id="file4" name="file4" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
+                        @error('file4')
+                            <small class="error">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="file-group">
+                        <label for="file5">Self-Review Certification <span class="required">*</span></label>
+                        <input type="file" id="file5" name="file5" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
+                        @error('file5')
+                            <small class="error">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="file-group">
+                        <label for="file6">Graduate Program Registration <span class="required">*</span></label>
+                        <input type="file" id="file6" name="file6" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
+                        @error('file6')
+                            <small class="error">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="file-group">
+                        <label for="file7">Master's Completion Certification <span class="required">*</span></label>
+                        <input type="file" id="file7" name="file7" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
+                        @error('file7')
+                            <small class="error">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="file-group">
+                        <label for="file8">No Pending Case Certification <span class="required">*</span></label>
+                        <input type="file" id="file8" name="file8" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
+                        @error('file8')
+                            <small class="error">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="file-group">
+                        <label for="file9">Supervisor's Certification <span class="required">*</span></label>
+                        <input type="file" id="file9" name="file9" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
+                        @error('file9')
                             <small class="error">{{ $message }}</small>
                         @enderror
                     </div>

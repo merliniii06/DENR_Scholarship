@@ -15,15 +15,19 @@ Route::get('/apply/form', [UserController::class, 'showApplicationForm']);
 Route::post('/apply/denr-scholar', [UserController::class, 'submitDenrScholar']);
 Route::post('/apply/study-non-study', [UserController::class, 'submitStudyNonStudy']);
 Route::post('/apply/permit-to-study', [UserController::class, 'submitPermitToStudy']);
+Route::post('/apply/study-leave', [UserController::class, 'submitStudyLeave']);
 
 // Admin routes
 Route::get('/admin_login', [AdminController::class, 'showLogin']);
 Route::post('/admin_login', [AdminController::class, 'login']);
 Route::post('/admin_logout', [AdminController::class, 'logout']);
 Route::get('/admin_home', [AdminController::class, 'showHome']);
+Route::get('/admin_home/folder/{folder}', [AdminController::class, 'showFolderPage'])->where('folder', 'denr-scholar|study-non-study|permit-to-study|study-leave|signed-permit-to-study|signed-study-leave');
 Route::get('/admin/api/applications', [AdminController::class, 'getApplicationsJson']);
 Route::get('/admin_home/today', [AdminController::class, 'viewTodaysApplications'])->name('admin.today');
 Route::get('/admin_home/week', [AdminController::class, 'viewThisWeekApplications'])->name('admin.week');
 Route::get('/admin_home/month', [AdminController::class, 'viewThisMonthApplications'])->name('admin.month');
 Route::post('/admin/applications/{id}/confirm', [AdminController::class, 'confirmApplication'])->name('admin.applications.confirm');
+Route::post('/admin/applications/{id}/upload-signed-document', [AdminController::class, 'uploadSignedDocument'])->name('admin.applications.upload-signed');
+Route::get('/admin/applications/{id}/download-signed-document', [AdminController::class, 'downloadSignedDocument'])->name('admin.applications.download-signed');
 Route::post('/admin/applications/{id}/delete', [AdminController::class, 'deleteApplication'])->name('admin.applications.delete');
